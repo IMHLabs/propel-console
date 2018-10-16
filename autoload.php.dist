@@ -1,0 +1,51 @@
+<?php
+if (file_exists(__DIR__ . '../../../propel/propel')) {
+    $propelDir = realpath(__DIR__ . '../../../propel/propel');
+} elseif (file_exists(__DIR__ . '/vendor/propel/propel')) {
+    $propelDir = realpath(__DIR__ . '/vendor/propel/propel');
+}
+
+if (file_exists($file = __DIR__. '/vendor/autoload.php')) {
+    $loader = require $file;
+    $loader->add('Foo', $propelDir . '/tests/Fixtures/namespaced/build/classes');
+    $loader->add('Baz', $propelDir . '/tests/Fixtures/namespaced/build/classes');
+    $loader->add('Propel\Tests', array(
+        $propelDir . '/tests',
+        $propelDir . '/tests/Fixtures/bookstore/build/classes',
+        $propelDir . '/tests/Fixtures/schemas/build/classes',
+        $propelDir . '/tests/Fixtures/quoting/build/classes'
+    ));
+    $loader->add('PropelConsole\Tests', __DIR__ . '/tests');
+    $loader->register();
+} elseif (file_exists($file = __DIR__.'/../../../vendor/autoload.php')) {
+    $loader = require $file;
+    $loader->add('Foo', $propelDir . '/tests/Fixtures/namespaced/build/classes');
+    $loader->add('Baz', $propelDir . '/tests/Fixtures/namespaced/build/classes');
+    $loader->add('Propel\Tests', array(
+        $propelDir . '/tests',
+        $propelDir . '/tests/Fixtures/bookstore/build/classes',
+        $propelDir . '/tests/Fixtures/schemas/build/classes',
+        $propelDir . '/tests/Fixtures/quoting/build/classes'
+    ));
+    $loader->add('PropelConsole\Tests', __DIR__ . '/tests');
+    $loader->register();
+} elseif (file_exists($file = $propelDir . '/vendor/Symfony/Component/ClassLoader/UniversalClassLoader.php')) {
+    require_once $file;
+    $loader = new \Symfony\Component\ClassLoader\UniversalClassLoader();
+    $loader->registerNamespaces(array(
+        'Propel\Common'     => $propelDir . '/src',
+        'Propel\Runtime'    => $propelDir . '/src',
+        'Propel\Generator'  => $propelDir . '/src',
+        'Symfony\Component' => $propelDir . '/vendor',
+        'Monolog'           => $propelDir . '/vendor/Monolog/src/',
+        'Foo'               => $propelDir . '/tests/Fixtures/namespaced/build/classes',
+        'Baz'               => $propelDir . '/tests/Fixtures/namespaced/build/classes',
+        'Propel\Tests'      => array(
+            $propelDir . '/tests',
+            $propelDir . '/tests/Fixtures/bookstore/build/classes',
+            $propelDir . '/tests/Fixtures/schemas/build/classes',
+        ),
+        'PropelConsole\Tests' => __DIR__ . '/tests'
+    ));
+    $loader->register();
+}

@@ -1,0 +1,19 @@
+{
+    "name":         "propel/propel-console",
+    "description":  "Expanded Propel Commands",
+    "type":         "library",
+    "keywords": [
+        "Propel",
+        "ORM",
+        "Console"
+    ],
+    "require": {
+        "propel/propel": "2.0.0-alpha8",
+        "IMHLabs/propel-config": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "PropelConsole\\": "src/"
+        }
+    }
+}
